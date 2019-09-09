@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# enable completion for aliases
+source ~/.bash_completion.d/complete_alias
+
+function f {
+    SKIP=(SST sst unit unittests UT stub IHUB)
+    nice ionice -n7 ag "${SKIP[@]/#/-g!*}" "$@"
+}
+alias s=f
+
+function subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+}
+
+function replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
+}
+
+function hgcd () { cd `hg root`/$*
+}
+
+function hgvim () { vim `hg root`/$*
+}
+alias hgvi=hgvim
+
+function hgdiff () { hg diff `hg root`/$*
+}
+
+function hglog () { hg log `hg root`/$*
+}
+
+function hgecl () { ecl `hg root`/$*
+}
+
+function hgll () { ll `hg root`/$*
+}
+
+function timediff {
+  START=$(date +%s%6N);
+  ./$1;
+  END=$(date +%s%6N);
+  echo "___________________"
+  echo
+  echo "Total time (in ns): $(($END - $START))"
+}
+
+function purge () { hg purge --all $@ && echo "*** PURGE FINISHED ***" ;}
+
+#alias ding='zenity --info --text="Job finished" 2> /dev/null' #not at all workspaces :(
+alias ding='xmessage "Job finished" -geometry 100x80-1000+500'
+alias notify='notify-send -t 50000 "Job finished"'
+
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias cd1='cd ..'
+alias cd2='cd ../..'
+alias cd3='cd ../../..'
+alias cd4='cd ../../../..'
+alias cd5='cd ../../../../..'
+
+alias subl='/repo/tools/SublimeText/sublime_text'
+#alias cat='/repo/tools/ccat-0.1.0/ccat'
+alias ls="/bin/ls --color=auto"
+alias la="ls -alh"
+alias ll='ls -halt'
+alias l='ls -l'
+alias l.='ls -d .*' ## Show hidden files ##
+alias fresh=purge
+alias tipmerge='hg merge; hg commit -m "Merge"'
+alias hgroot='cd `hg root`'
+alias gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
+alias cdroot=hgroot
+alias g=git
+alias size='du -h --max-depth=1 $@ | sort -hr'
+alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
+alias vi=vim
+alias so='fview -r '
+alias cp_net="rsync -avz"
+alias cp="rsync -ah --progress"
+alias llgrep="ll | grep"
+alias lgrep="l | grep"
+alias findregex="find -regextype posix-extended -regex"
+alias psgrep='ps -ef | grep -v grep | grep'
+
+alias darkside='${HOME}/scripts/change_termite_colors solarized_dark'
+alias lightside='${HOME}/scripts/change_termite_colors solarized_light'
+
+# ISAM related
+alias isamcraft='clear; octopus STDIO CLICraft'
+alias builds='/ap/ftp/pub/outgoing/ESAM/DAILY'
+alias daily='/ap/ftp/pub/outgoing/ESAM/DAILY'
+
+execute_and_notify()
+{
+    "$@" && notify-send "Finished executing" "$(echo "$@")"
+}
+
+mv_all_to_subfolder()
+{
+    find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
+}
+
+mkcdir()
+{
+    mkdir -p "$1" && cd "$1"
+}
+
+docker_cleanup()
+{
+    #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
+    #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
+    docker rm -v $(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
+    docker rmi $(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
+}
+
+function mk () {
+  #Info: nbr of threads == $1
+  echo "*** STARTING BUILD ***"
+  nice ionice -n7 jmake -log IVY=ivy -j $@  #-ad for using docker
+  notify-send -t 50000 "Build 'mk $1' finished"
+}
+
+# enable completion for aliases example:
+# alias container=docker\ container
+# complete -F _complete_alias container
+complete -F _complete_alias g

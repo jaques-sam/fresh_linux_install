@@ -2,6 +2,8 @@ source $HOME/antigen.zsh
 
 antigen use oh-my-zsh
 
+antigen theme romkatv/powerlevel10k
+
 antigen bundles <<EOBUNDLES
   git
   colored-man-pages
@@ -18,14 +20,11 @@ antigen bundles <<EOBUNDLES
   gretzky/auto-color-ls
   rsync
   svn-fast-info
-  clayhill/svn_aliasses
-  clayhill/spaceship-prompt
 EOBUNDLES
 
 antigen apply
 
-SPACESHIP_DIR_TRUNC="6"
-SPACESHIP_EXIT_CODE_SHOW="true"
-SPACESHIP_TIME_SHOW="true"
+[[ -f ~/.aliasses ]] && source ~/.aliasses
 
-[ -f "~/.zshrc_aliasses" ] && source "~/.zshrc_aliasses"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh

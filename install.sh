@@ -4,7 +4,7 @@ function add_zsh_to_profile() {
   zsh_path=$(which zsh)
 
   echo "" >> ~/.profile
-  echo "# Added by ROEVA for zsh" >> ~/.profile
+  echo "# Added by SAMJA for zsh" >> ~/.profile
   echo 'export SHELL=$(which zsh)' >> ~/.profile
   echo '[ -z "$ZSH_VERSION" ] && exec $SHELL -l' >> ~/.profile
 
