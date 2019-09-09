@@ -13,8 +13,8 @@ antigen bundles <<EOBUNDLES
   jira
   gem
   battery
-  zsh-syntax-highlighting
-  zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting
+  zsh-users/zsh-autosuggestions
   bartboy011/cd-reminder
   MikeDacre/cdbk
   gretzky/auto-color-ls
