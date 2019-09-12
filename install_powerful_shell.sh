@@ -40,6 +40,7 @@ function update_zshrc() {
   fi
   echo -e "\nCopying zshrc"
   cp zshrc ~/.zshrc
+  cp aliases ~/.aliases
 }
 
 
