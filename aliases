@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# enable completion for aliases
-source ~/.bash_completion.d/complete_alias
-
 function f {
     SKIP=(SST sst unit unittests UT stub IHUB)
     nice ionice -n7 ag "${SKIP[@]/#/-g!*}" "$@"
@@ -59,8 +56,6 @@ alias cd3='cd ../../..'
 alias cd4='cd ../../../..'
 alias cd5='cd ../../../../..'
 
-alias subl='/repo/tools/SublimeText/sublime_text'
-#alias cat='/repo/tools/ccat-0.1.0/ccat'
 alias ls="/bin/ls --color=auto"
 alias la="ls -alh"
 alias ll='ls -halt'
@@ -69,8 +64,8 @@ alias l.='ls -d .*' ## Show hidden files ##
 alias fresh=purge
 alias tipmerge='hg merge; hg commit -m "Merge"'
 alias hgroot='cd `hg root`'
+alias groot='git rev-parse --show-toplevel'
 alias gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
-alias cdroot=hgroot
 alias g=git
 alias size='du -h --max-depth=1 $@ | sort -hr'
 alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
@@ -83,8 +78,7 @@ alias lgrep="l | grep"
 alias findregex="find -regextype posix-extended -regex"
 alias psgrep='ps -ef | grep -v grep | grep'
 
-alias darkside='${HOME}/scripts/change_termite_colors solarized_dark'
-alias lightside='${HOME}/scripts/change_termite_colors solarized_light'
+alias dog='pygmentize -g'
 
 # ISAM related
 alias isamcraft='clear; octopus STDIO CLICraft'
