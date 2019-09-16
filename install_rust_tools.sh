@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source install_helpers.sh
+
 function install_rust() {
   command -v cargo > /dev/null && echo -e "rust is already installed" && return
   curl https://sh.rustup.rs -sSf | sh
@@ -7,9 +9,9 @@ function install_rust() {
 
 function install_ripgrep() {
   command -v rg > /dev/null && echo -e "ripgrep is already installed" && return
-  sudo apt install build-essential
+  install_tool build-essential
   echo -e "\nInstalling ripgrep"
-  ## Replace block below by `sudo apt-get install ripgrep` since Ubuntu 18.10
+  ## Replace block below by `install ripgrep` since Ubuntu 18.10
   git clone https://github.com/BurntSushi/ripgrep /tmp/ripgrep
   cd /tmp/ripgrep
   cargo build --release
