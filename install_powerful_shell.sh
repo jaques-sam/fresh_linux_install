@@ -3,7 +3,6 @@
 source install_helpers.sh
 
 function install_zsh() {
-	install_tool zsh
   if ! which zsh > /dev/null; then
     echo -e "\nInstalling zsh"
     

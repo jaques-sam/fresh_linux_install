@@ -12,25 +12,6 @@ function subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' 
 function replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
 }
 
-function hgcd () { cd `hg root`/$*
-}
-
-function hgvim () { vim `hg root`/$*
-}
-alias hgvi=hgvim
-
-function hgdiff () { hg diff `hg root`/$*
-}
-
-function hglog () { hg log `hg root`/$*
-}
-
-function hgecl () { ecl `hg root`/$*
-}
-
-function hgll () { ll `hg root`/$*
-}
-
 function timediff {
   START=$(date +%s%6N);
   ./$1;
@@ -42,7 +23,6 @@ function timediff {
 
 function purge () { hg purge --all $@ && echo "*** PURGE FINISHED ***" ;}
 
-#alias ding='zenity --info --text="Job finished" 2> /dev/null' #not at all workspaces :(
 alias ding='xmessage "Job finished" -geometry 100x80-1000+500'
 alias notify='notify-send -t 50000 "Job finished"'
 
@@ -60,7 +40,7 @@ alias ls="/bin/ls --color=auto"
 alias la="ls -alh"
 alias ll='ls -halt'
 alias l='ls -l'
-alias l.='ls -d .*' ## Show hidden files ##
+alias l.='ls -d .*'
 alias fresh=purge
 alias tipmerge='hg merge; hg commit -m "Merge"'
 alias hgroot='cd `hg root`'
@@ -109,10 +89,10 @@ docker_cleanup()
 }
 
 function mk () {
-  #Info: nbr of threads == $1
-  echo "*** STARTING BUILD ***"
-  nice ionice -n7 jmake -log IVY=ivy -j $@  #-ad for using docker
-  notify-send -t 50000 "Build 'mk $1' finished"
+    local threads=$1
+    echo "*** STARTING BUILD ***"
+    nice ionice -n7 make -j ${threads}
+    notify-send -t 50000 "Build 'mk ${threads}' finished"
 }
 
 # enable completion for aliases example:

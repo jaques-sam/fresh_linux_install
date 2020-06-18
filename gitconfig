@@ -56,7 +56,7 @@
 	bd = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:iso) %(refname:short)'
 	funcAtRevInFile = "!f() { git log ${2} -n1 -L :${1}:${3} | sed '/^+/d' | sed 's/^.//g'; }; f"
 	moveBranchToRev = !git branch -f "$1" "$2"
-    changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
+	changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 
 [color]
