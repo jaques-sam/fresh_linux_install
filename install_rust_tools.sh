@@ -9,6 +9,11 @@ function install_rust() {
 
 function install_ripgrep() {
   command -v rg > /dev/null && echo -e "ripgrep is already installed" && return
+  cargo install ripgrep
+}
+
+function install_ripgrep_old() {
+  command -v rg > /dev/null && echo -e "ripgrep is already installed" && return
   install_tool build-essential
   echo -e "\nInstalling ripgrep"
   ## Replace block below by `install ripgrep` since Ubuntu 18.10
