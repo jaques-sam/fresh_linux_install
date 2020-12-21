@@ -36,7 +36,6 @@ alias cd3='cd ../../..'
 alias cd4='cd ../../../..'
 alias cd5='cd ../../../../..'
 
-alias ls="/bin/ls --color=auto"
 alias la="ls -alh"
 alias ll='ls -halt'
 alias l='ls -l'
