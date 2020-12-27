@@ -37,4 +37,4 @@ install_rust
 install_ripgrep
 install_fastmod
 
-export PATH="$HOME/.cargo/bin:$PATH"
+cp zshenv ${HOME}/.zshenv
