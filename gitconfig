@@ -4,6 +4,7 @@
 	fsynconbjectfiles = true
 	excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
 	trustctime = false
+	editor = vim
 [user]
 	name = Sam Jaques
 	email = <sam.jaques@barco.com>
