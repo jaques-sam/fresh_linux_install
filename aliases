@@ -55,6 +55,7 @@ alias llgrep="ll | grep"
 alias lgrep="l | grep"
 alias findregex="find -regextype posix-extended -regex"
 alias psgrep='ps -ef | grep -v grep | grep'
+alias tree='colorls -t'
 
 alias dog='pygmentize -g'
 
