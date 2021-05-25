@@ -1,10 +1,9 @@
 #!/bin/bash
 
-function f {
-    SKIP=(SST sst unit unittests UT stub IHUB)
-    nice ionice -n7 ag "${SKIP[@]/#/-g!*}" "$@"
+function s {
+    SKIP=(SST sst unit unittests UT stub IHUB tests)
+    nice ionice -n7 rg "${SKIP[@]/#/-g!*}" "$@"
 }
-alias s=f
 
 function subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
 }
