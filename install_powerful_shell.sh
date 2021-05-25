@@ -2,14 +2,6 @@
 
 source install_helpers.sh
 
-function install_zsh() {
-  if ! which zsh > /dev/null; then
-    echo -e "\nInstalling zsh"
-    
-    install_tool zsh
-  fi
-}
-
 function add_zsh_to_profile() {
   zsh_path=$(which zsh)
 
@@ -46,7 +38,7 @@ function update_zshrc() {
 }
 
 
-install_zsh
+install_tool zsh
 install_antigen
 update_zshrc
 change_shell

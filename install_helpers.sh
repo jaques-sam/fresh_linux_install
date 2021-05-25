@@ -30,6 +30,8 @@ function install_tool()
         installer="echo \'no \'"
   esac
   
+  command -v ${tool_name} > /dev/null && echo -e "${tool_name} is already installed" && return
+  echo -e "\nInstalling ${tool_name}"
   eval "${installer} install ${tool_name}"
 }
 
