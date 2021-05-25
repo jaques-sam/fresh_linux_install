@@ -5,6 +5,7 @@ source install_helpers.sh
 function install_rust() {
   command -v cargo > /dev/null && echo -e "rust is already installed" && return
   curl https://sh.rustup.rs -sSf | sh
+  source $HOME/.cargo/env
 }
 
 function install_ripgrep() {
