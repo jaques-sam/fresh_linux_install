@@ -33,8 +33,9 @@ function update_zshrc() {
     echo -e "zshrc file already exists. Find old file as /tmp/zshrc_old"
     mv ~/.zshrc /tmp/zshrc_old
   fi
-  echo -e "\nCopying zshrc"
-  cp zshrc ~/.zshrc
+  echo -e "\nCopying zshrc and zshenv"
+  cp zshrc ${HOME}/.zshrc
+  cp zshenv ${HOME}/.zshenv
 }
 
 

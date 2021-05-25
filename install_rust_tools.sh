@@ -24,4 +24,3 @@ install_rust
 install_ripgrep
 install_fastmod
 
-cp zshenv ${HOME}/.zshenv
