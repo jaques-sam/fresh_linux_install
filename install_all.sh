@@ -5,4 +5,5 @@ cp gitconfig ~/.gitconfig
 
 source install_powerful_shell.sh
 source install_rust_tools.sh
+source install_ruby_tools.sh
 source install_common_tools.sh
