@@ -10,5 +10,5 @@ install_tool jq
 install_tool cmake
 install_tool python3
 install_tool python3-pip
-install_tool ssh-pass
+install_tool sshpass
 

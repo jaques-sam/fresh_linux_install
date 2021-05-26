@@ -26,7 +26,7 @@ Via `install_common_tools.sh`
   - cmake
   - python3
   - python3-pip
-  - ssh-pass
+  - sshpass
 
 Common files:
   - ~/.aliases
