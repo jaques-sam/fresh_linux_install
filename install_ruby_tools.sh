@@ -32,4 +32,3 @@ function install_colorls() {
 
 install_ruby
 install_colorls
-

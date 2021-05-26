@@ -23,4 +23,3 @@ function install_fastmod() {
 install_rust
 install_ripgrep
 install_fastmod
-

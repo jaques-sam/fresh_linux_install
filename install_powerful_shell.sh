@@ -5,12 +5,12 @@ source install_helpers.sh
 function add_zsh_to_profile() {
   zsh_path=$(which zsh)
 
-  echo "" >> ~/.profile
-  echo "# Added by ${USER} for zsh" >> ~/.profile
-  echo 'export SHELL=$(which zsh)' >> ~/.profile
-  echo '[ -z "$ZSH_VERSION" ] && exec $SHELL -l' >> ~/.profile
+  echo "" >> $HOME/.profile
+  echo "# Added by ${USER} for zsh" >> $HOME/.profile
+  echo 'export SHELL=$(which zsh)' >> $HOME/.profile
+  echo '[ -z "$ZSH_VERSION" ] && exec $SHELL -l' >> $HOME/.profile
 
-  source ~/.profile
+  source $HOME/.profile
 }
 
 function change_shell() {
@@ -23,23 +23,16 @@ function change_shell() {
 }
 
 function install_antigen() {
-  [[ -f ~/antigen.zsh ]] && echo -e "antigen is already installed" && return
+  [[ -f $HOME/antigen.zsh ]] && echo -e "antigen is already installed" && return
   echo -e "\nInstalling antigen"
-  curl -L git.io/antigen > ~/antigen.zsh
+  curl -L git.io/antigen > $HOME/antigen.zsh
 }
 
-function update_zshrc() {
-  if [[ -f ~/.zshrc ]]; then
-    echo -e "zshrc file already exists. Find old file as /tmp/zshrc_old"
-    mv ~/.zshrc /tmp/zshrc_old
-  fi
-  echo -e "\nCopying zshrc and zshenv"
-  cp zshrc ${HOME}/.zshrc
-  cp zshenv ${HOME}/.zshenv
-}
 
+update_file zshrc ${HOME}/.zshrc
+update_file zshenv ${HOME}/.zshenv
+update_file aliases ${HOME}/.aliases
 
 install_tool zsh
 install_antigen
-update_zshrc
 change_shell
