@@ -56,7 +56,7 @@ alias lgrep="l | grep"
 alias findregex="find -regextype posix-extended -regex"
 alias psgrep='ps -ef | grep -v grep | grep'
 alias tree='colorls -t'
-
+alias o='code -r'
 alias dog='pygmentize -g'
 
 # ISAM related

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+source install_helpers.sh
+
+function install_python3()
+{
+  install_tool python3
+  install_tool python3-pip
+  if [[ ! $(command -v "python3 -V" > /dev/null) ]]; then
+    local python_exes=$(python3 -m site --user-base)
+    echo "[[ -d ${python_exes} ]] && export PATH=\"${python_exes}/bin:\$PATH\"" >> ~/.zshrc
+  fi
+}
+
+
+install_python3
