@@ -18,6 +18,7 @@ Via `install_ruby_tools.sh`:
   - colorls
 
 Via `install_common_tools.sh`
+  - diff-so-fancy
   - rsync
   - vim
   - git

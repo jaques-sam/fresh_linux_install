@@ -56,7 +56,7 @@ function update_file()
     return
   fi
 
-  local difference=$(diff ${dest_filename} ${src_basename})
+  local difference=$(diff ${dest_filename} ${src_basename} -u)
   if [[ -n "${difference}" ]]; then
     echo -e "${src_basename} file already exists, difference is:"
     echo -e "${difference}"

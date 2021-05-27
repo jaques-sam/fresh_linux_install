@@ -2,8 +2,26 @@
 
 source install_helpers.sh
 
+function install_diff_so_fancy()
+{
+  is_installed diff-so-fancy && return
+
+  local install_dir="$HOME/repos/other/diffsofancy"
+
+  if [[ -d ${install_dir} ]]; then
+    git_repo_update ${install_dir}
+  else
+    mkdir -p ${install_dir}
+    git clone https://github.com/so-fancy/diff-so-fancy ${install_dir}
+  fi
+  chmod +x ${install_dir}/diff-so-fancy
+  echo "[[ -d ${install_dir} ]] && export PATH=\"${install_dir}:\$PATH\"" >> $HOME/.zshenv
+}
+
 install_tool git
 update_file gitconfig $HOME/.gitconfig
+
+install_diff_so_fancy
 
 install_tool rsync
 install_tool vim
@@ -11,4 +29,3 @@ install_tool screen
 install_tool jq
 install_tool cmake
 install_tool sshpass
-
