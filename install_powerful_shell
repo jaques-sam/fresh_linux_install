@@ -29,9 +29,8 @@ function install_antigen() {
 }
 
 
-update_file zshrc ${HOME}/.zshrc
-update_file zshenv ${HOME}/.zshenv
-update_file aliases ${HOME}/.aliases
+update_file zshrc $HOME/.zshrc
+update_file aliases $HOME/.aliases
 
 install_tool zsh
 install_antigen

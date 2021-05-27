@@ -59,3 +59,10 @@ function update_file()
     cp ${src_basename} ${dest_filename}
   fi
 }
+
+function git_repo_update()
+{
+  local git_repo_dir=${1}
+  git -C ${git_repo_dir} checkout master -f
+  git -C ${git_repo_dir} pull -f
+}

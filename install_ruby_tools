@@ -6,22 +6,29 @@ function install_ruby() {
   command -v ruby > /dev/null && echo -e "ruby is already installed" && return
   echo -e "\nInstalling ruby"
 
-  cd /tmp/
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  echo '[[ -d $HOME/.rbenv/bin ]] && export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-  echo 'command -v rbenv && eval "$(rbenv init -)"' >> ~/.zshrc
-  exec $SHELL
+  local rbenv_dir="$HOME/.rbenv"
+  if [[ -d ${rbenv_dir} ]]; then
+    git_repo_update ${rbenv_dir}
+  else
+    git clone https://github.com/rbenv/rbenv.git ${rbenv_dir}
+  fi
+  echo '[[ -d ${rbenv_dir}/bin ]] && export PATH="${rbenv_dir}/bin:$PATH"' >> $HOME/.zshenv
+  echo 'command -v rbenv > /dev/null && eval "$(rbenv init -)"' >> $HOME/.zshenv
 
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  echo '[[ -d $HOME/.rbenv/plugins/ruby-build/bin ]] && export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-  exec $SHELL
+  local ruby_build_dir="${rbenv_dir}/plugins/ruby-build"
+  if [[ -d ${ruby_build_dir} ]]; then
+    git_repo_update ${ruby_build_dir}
+  else
+    git clone https://github.com/rbenv/ruby-build.git ${ruby_build_dir}
+  fi
+  echo '[[ -d ${ruby_build_dir}/bin ]] && export PATH="${ruby_build_dir}/bin:$PATH"' >> $HOME/.zshenv
+  source $HOME/.zshenv
 
   rbenv install 3.0.1
   rbenv global 3.0.1
   ruby -v
 
   command -v ruby > /dev/null || echo -e "ruby is not installed correctly!"
-  cd -
 }
 
 function install_colorls() {
