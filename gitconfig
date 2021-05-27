@@ -30,6 +30,9 @@
 	rh = reset --hard
 	rh1 = reset HEAD^ --hard
 	rh2 = reset HEAD^^ --hard
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbs = rebase --skip
 	pull = pull --ff-only
 	softreset = reset --soft HEAD^
 	sr = reset --soft
