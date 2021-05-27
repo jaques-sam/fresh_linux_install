@@ -3,7 +3,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function install_diff_so_fancy()
+function __install_diff_so_fancy()
 {
   is_installed diff-so-fancy && return
 
@@ -22,7 +22,7 @@ function install_diff_so_fancy()
 install_tool git
 update_file gitconfig $HOME/.gitconfig
 
-install_diff_so_fancy
+__install_diff_so_fancy
 
 install_tool rsync
 install_tool vim

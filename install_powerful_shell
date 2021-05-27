@@ -3,7 +3,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function add_zsh_to_profile() {
+function __add_zsh_to_profile() {
   zsh_path=$(which zsh)
 
   echo "" >> $HOME/.profile
@@ -14,16 +14,16 @@ function add_zsh_to_profile() {
   source $HOME/.profile
 }
 
-function change_shell() {
+function __change_shell() {
   [ "$SHELL" == "$(which zsh)" ] && echo -e "zsh is already the default shell" && return
   echo "User shell is not zsh. Changing..."
   if ! chsh -s $(which zsh); then
     echo "Failed with chsh. Setting .profile"
-    add_zsh_to_profile
+    __add_zsh_to_profile
   fi
 }
 
-function install_antigen() {
+function __install_antigen() {
   [[ -f $HOME/antigen.zsh ]] && echo -e "antigen is already installed" && return
   echo -e "\nInstalling antigen"
   curl -L git.io/antigen > $HOME/antigen.zsh
@@ -34,5 +34,5 @@ update_file zshrc $HOME/.zshrc
 update_file aliases $HOME/.aliases
 
 install_tool zsh
-install_antigen
-change_shell
+__install_antigen
+__change_shell

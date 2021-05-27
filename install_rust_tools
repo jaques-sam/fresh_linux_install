@@ -3,7 +3,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function install_rust() {
+function __install_rust() {
   is_installed cargo && return
 
   echo -e "\nInstalling rust"
@@ -13,8 +13,7 @@ function install_rust() {
   source $HOME/.zshenv
 }
 
-
-install_rust
+__install_rust
 
 cargo install fastmod
 cargo install ripgrep

@@ -3,7 +3,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function install_ruby() {
+function __install_ruby() {
   is_installed ruby && return
   echo -e "\nInstalling ruby"
 
@@ -31,6 +31,6 @@ function install_ruby() {
 }
 
 
-install_ruby
+__install_ruby
 
 gem install colorls

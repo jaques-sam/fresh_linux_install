@@ -3,7 +3,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function install_python3()
+function __install_python3()
 {
   is_installed python3 && return
 
@@ -15,6 +15,6 @@ function install_python3()
 }
 
 
-install_python3
+__install_python3
 
 pip3 install conan
