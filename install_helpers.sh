@@ -30,20 +30,26 @@ function os_installer()
   echo ${installer}
 }
 
+function is_installed() {
+  local tool_name="$1"
+
+  command -v ${tool_name} > /dev/null && echo -e "${tool_name} is already installed"
+}
+
 function install_tool()
 {
   local tool_name="$1"
-  local installer=$(os_installer)
 
-  command -v ${tool_name} > /dev/null && echo -e "${tool_name} is already installed" && return
+  is_installed ${tool_name} && return
   echo -e "\nInstalling ${tool_name}"
-  eval "${installer} install ${tool_name} -y"
+
+  $(os_installer) install ${tool_name} -y
 }
 
 function update_file()
 {
-  local src_basename=$1  # only name of the file
-  local dest_filename=$2  # filename (relative or absolute path)
+  local src_basename="$1"  # only name of the file
+  local dest_filename="$2"  # filename (relative or absolute path)
 
   if [[ ! -f ${dest_filename} ]]; then
     cp ${src_basename} ${dest_filename}
@@ -62,7 +68,8 @@ function update_file()
 
 function git_repo_update()
 {
-  local git_repo_dir=${1}
+  local git_repo_dir="$1"
+
   git -C ${git_repo_dir} checkout master -f
   git -C ${git_repo_dir} pull -f
 }

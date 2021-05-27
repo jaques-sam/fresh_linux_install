@@ -1,25 +1,17 @@
 #!/usr/bin/env bash
 
 function install_rust() {
-  command -v cargo > /dev/null && echo -e "rust is already installed" && return
+  is_installed cargo && return
+
+  echo -e "\nInstalling rust"
   curl https://sh.rustup.rs -sSf | sh
   echo 'source "$HOME/.cargo/env"' >> $HOME/.zshenv
   echo '[[ -d $HOME/.cargo/bin ]] && export PATH="$HOME/.cargo/bin:$PATH"' >> $HOME/.zshenv
   source $HOME/.zshenv
 }
 
-function install_ripgrep() {
-  command -v rg > /dev/null && echo -e "ripgrep is already installed" && return
-  cargo install ripgrep
-}
-
-function install_fastmod() {
-  command -v fastmod > /dev/null && echo -e "fastmod is already installed" && return
-  echo -e "\nInstalling fastmod"
-  cargo install fastmod
-}
-
 
 install_rust
-install_ripgrep
-install_fastmod
+
+cargo install fastmod
+cargo install ripgrep
