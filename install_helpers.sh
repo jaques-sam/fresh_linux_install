@@ -30,6 +30,14 @@ function os_installer()
   echo ${installer}
 }
 
+function print_commence()
+{
+  local script_name="$1"
+
+  local line=$(printf "\n      %-30s%-s\n"  "${script_name:0:30}" " ")  # last string is used to fill
+  echo -e "${line// /_}"
+}
+
 function is_installed() {
   local tool_name="$1"
 

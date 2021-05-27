@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source install_helpers.sh
+print_commence $BASH_SOURCE
 
 function add_zsh_to_profile() {
   zsh_path=$(which zsh)

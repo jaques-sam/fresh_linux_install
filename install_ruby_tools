@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source install_helpers.sh
+print_commence $BASH_SOURCE
 
 function install_ruby() {
   is_installed ruby && return
