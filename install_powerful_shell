@@ -33,6 +33,7 @@ function __install_antigen() {
 update_file zshrc $HOME/.zshrc
 update_file aliases $HOME/.aliases
 
+install_tool curl
 install_tool zsh
 __install_antigen
 __change_shell

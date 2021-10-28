@@ -30,6 +30,7 @@ function __install_ruby() {
   ruby -v
 }
 
+install_tool libssl-dev
 
 __install_ruby
 
