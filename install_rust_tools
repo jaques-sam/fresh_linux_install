@@ -9,7 +9,6 @@ function __install_rust() {
   echo -e "\nInstalling rust"
   curl https://sh.rustup.rs -sSf | sh
   echo 'source "$HOME/.cargo/env"' >> $HOME/.zshenv
-  echo '[[ -d $HOME/.cargo/bin ]] && export PATH="$HOME/.cargo/bin:$PATH"' >> $HOME/.zshenv
   source $HOME/.zshenv
 }
 
