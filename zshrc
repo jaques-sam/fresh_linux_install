@@ -32,3 +32,9 @@ EOBUNDLES
 antigen apply
 
 [[ -f ~/.aliases ]] && source ~/.aliases
+
+# Options
+setopt CORRECT
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+unsetopt HIST_IGNORE_DUPS
