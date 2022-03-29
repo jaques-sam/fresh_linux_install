@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+alias notify='xmessage -nearmouse -timeout 5 -buttons ""'
+
+function warn {
+    $@
+    notify "Finished: $@" || true
+}
+
+function mk {
+    local threads=$(nproc)
+    echo "*** STARTING BUILD ***"
+    nice ionice -n7 make -j ${threads} $@
+    notify "Build finished: $@" || true
+}
+
 function s {
     SKIP=(SST sst unit unittests UT stub IHUB tests)
     nice ionice -n7 rg "${SKIP[@]/#/-g!*}" "$@"
@@ -9,7 +23,7 @@ function subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' 
 }
 
 function replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
-}
+}  # use fastmod instead
 
 function timediff {
   START=$(date +%s%6N);
@@ -20,10 +34,26 @@ function timediff {
   echo "Total time (in ns): $(($END - $START))"
 }
 
-function purge () { hg purge --all $@ && echo "*** PURGE FINISHED ***" ;}
+function purge { hg purge --all $@ && echo "*** PURGE FINISHED ***" ;}
 
-alias ding='xmessage "Job finished" -geometry 100x80-1000+500'
-alias notify='notify-send -t 50000 "Job finished"'
+function mv_all_to_subfolder {
+    find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
+}
+
+function mkcdir {
+    mkdir -p "$1" && cd "$1"
+}
+
+function docker_cleanup {
+    #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
+    #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
+    docker rm -v $(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
+    docker rmi $(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
+}
+
+function size {
+    du -h --max-depth=1 $@ | sort -hr
+}
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -35,66 +65,32 @@ alias cd3='cd ../../..'
 alias cd4='cd ../../../..'
 alias cd5='cd ../../../../..'
 
-alias la="ls -alh"
-alias ll='ls -halt'
-alias l='ls -l'
-alias l.='ls -d .*'
-alias fresh=purge
-alias tipmerge='hg merge; hg commit -m "Merge"'
-alias hgroot='cd `hg root`'
-alias groot='git rev-parse --show-toplevel'
-alias gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
-alias g=git
-alias size='du -h --max-depth=1 $@ | sort -hr'
-alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
-alias vi=vim
-alias so='fview -r '
 alias cp_net="rsync -avz"
 alias cp="rsync -ah --progress"
-alias llgrep="ll | grep"
-alias lgrep="l | grep"
-alias findregex="find -regextype posix-extended -regex"
-alias psgrep='ps -ef | grep -v grep | grep'
-alias tree='colorls -t'
-alias o='code -r'
 alias dog='pygmentize -g'
+alias findregex="find -regextype posix-extended -regex"
+alias g=git
+alias gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
+alias groot='cd $(git rev-parse --show-toplevel)'
+alias hgroot='cd $(hg root)'
+alias l.='ls -d .*'
+alias l='ls -l'
+alias la="ls -alh"
+alias lgrep="l | grep"
+alias ll='ls -halt'
+alias llgrep="ll | grep"
+alias o='code -r'
+alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
+alias so='fview -r '
+alias tree='colorls -t'
+alias vi=vim
 
 # ISAM related
 alias isamcraft='clear; octopus STDIO CLICraft'
 alias builds='/ap/ftp/pub/outgoing/ESAM/DAILY'
 alias daily='/ap/ftp/pub/outgoing/ESAM/DAILY'
 
-execute_and_notify()
-{
-    "$@" && notify-send "Finished executing" "$(echo "$@")"
-}
-
-mv_all_to_subfolder()
-{
-    find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
-}
-
-mkcdir()
-{
-    mkdir -p "$1" && cd "$1"
-}
-
-docker_cleanup()
-{
-    #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
-    #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
-    docker rm -v $(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
-    docker rmi $(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
-}
-
-function mk () {
-    local threads=$1
-    echo "*** STARTING BUILD ***"
-    nice ionice -n7 make -j ${threads}
-    notify-send -t 50000 "Build 'mk ${threads}' finished"
-}
-
 # enable completion for aliases example:
 # alias container=docker\ container
 # complete -F _complete_alias container
-complete -F _complete_alias g
+[[ "$(echo $0)" == "/bin/bash" ]] && complete -F _complete_alias g  # git
