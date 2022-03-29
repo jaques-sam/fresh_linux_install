@@ -6,8 +6,8 @@
 	trustctime = false
 	editor = vim
 [user]
-	name = Sam Jaques
-	email = <sam.jaques@barco.com>
+	name =
+	email =
 [alias]
 	dt = difftool
 	cp = cherry-pick
@@ -62,7 +62,6 @@
 	moveBranchToRev = !git branch -f "$1" "$2"
 	changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-
 [color]
 	ui = true
 [color "diff"]
@@ -72,27 +71,6 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
-[difftoo]
-	prompt = false
-	guitool = md
-[difftool "md"]
-	cmd = meld $LOCAL $REMOTE
-[merge]
-	tool = kdiff3
-[mergetool "kdiff3"]
-	path = C:/Program files/KDiff3/kdiff3.exe
-	trustExitCode = false
-[diff]
-	tool = md
-	algorithm = patience
-	guitool = kdiff3
-[difftool "sourcetree"]
-	cmd = '' \"$LOCAL\" \"$REMOTE\"
-[mergetool "sourcetree"]
-	cmd = 'C:/Program Files/KDiff3/kdiff3.exe' \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
-	trustExitCode = true
-[difftool "kdiff3"]
-	path = C:/Program Files/KDiff3/kdiff3.exe
 [branch]
 	autosetuprebase = always
 [fetch]
@@ -106,7 +84,6 @@
 [rebase]
 	autoStash = false
 	autosquash = true
-
 [winUpdater]
 	recentlySeenVersion = 2.20.1.windows.1
 [filter "lfs"]
