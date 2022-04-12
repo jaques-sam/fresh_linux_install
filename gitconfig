@@ -2,7 +2,8 @@
 	fsyncobjectfiles = true
 	preloadindex = true
 	fsynconbjectfiles = true
-	excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
+	#excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
+	excludesfile = ~/.gitignore_global
 	trustctime = false
 	editor = vim
 [user]
@@ -62,6 +63,8 @@
 	moveBranchToRev = !git branch -f "$1" "$2"
 	changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+	children = "!f() { git rev-list --all --not $1^@ --children | grep $(git rev-parse $1); }; f" # reachable children of a ref
+
 [color]
 	ui = true
 [color "diff"]
@@ -71,6 +74,19 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+
+[merge]
+	tool = vscode
+[mergetool]
+	keepBackup = false
+[mergetool "vscode"]
+	cmd = code --wait --new-window $MERGED
+
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff --new-window $LOCAL $REMOTE
+
 [branch]
 	autosetuprebase = always
 [fetch]
