@@ -25,8 +25,8 @@ function __install_ruby() {
   echo "[[ -d ${ruby_build_dir}/bin ]] && export PATH=\"${ruby_build_dir}/bin:\$PATH\"" >> $HOME/.zshenv
   source $HOME/.zshenv
 
-  rbenv install 3.0.1
-  rbenv global 3.0.1
+  rbenv install 3.1.2
+  rbenv global 3.1.2
   ruby -v
 }
 
