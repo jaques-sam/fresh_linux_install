@@ -1,1 +1,2 @@
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"

@@ -3,22 +3,12 @@
 ## Actions
 
 Installation of the following tools:
-Via `install_powerful_shell.sh`:
-
-  - zsh: our new default shell
-  - antigen: zsh package manager
-  - powerlevel10k fast powerful shell prompt, this will start config wizard
 
 Via `install_rust_tools.sh`:
 
   - full rust package
   - ripgrep (rg): better and faster search to replace `grep`, `ag`, etc
   - fastmod: refactor better and faster
-
-Via `install_ruby_tools.sh`:
-
-  - full ruby package
-  - colorls
 
 Via `install_common_tools.sh`
 
@@ -33,6 +23,12 @@ Via `install_common_tools.sh`
   - screen
   - sshpass
   - vim
+
+Via `install_powerful_shell.sh`:
+
+  - zsh: our new default shell
+  - antigen: zsh package manager
+  - powerlevel10k fast powerful shell prompt, this will start config wizard
 
 Common files:
 

@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
 
 source install_helpers.sh
 
 os_installer update
 
-source install_powerful_shell
-
 source install_common_tools
+source install_powerful_shell
 source install_rust_tools
-source install_ruby_tools
 source install_python_tools

@@ -14,5 +14,21 @@ function __install_rust() {
 
 __install_rust
 
-cargo install fastmod
-cargo install ripgrep
+cargo install \
+  bat \
+  du-dust \
+  exa \
+  fastmod \
+  fd-find \
+  ripgrep \
+  procs \
+  rm-improved \
+  sd \
+  starship \
+  topgrade \
+  xcp \
+  zoxide \
+  --locked
+
+command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+command -v zoxide > /dev/null && echo 'eval "$(zoxide init zsh)"' >> "$HOME/.zshrc"

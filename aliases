@@ -82,13 +82,14 @@ alias llgrep="ll | grep"
 alias o='code -r'
 alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
 alias so='fview -r '
-alias tree='colorls -t'
 alias vi=vim
 
-# ISAM related
-alias isamcraft='clear; octopus STDIO CLICraft'
-alias builds='/ap/ftp/pub/outgoing/ESAM/DAILY'
-alias daily='/ap/ftp/pub/outgoing/ESAM/DAILY'
+which exa > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  alias ll='exa -lbh --icons --color=auto --group-directories-first'
+else
+  alias ll='ls -alh --color=auto'
+fi
 
 # enable completion for aliases example:
 # alias container=docker\ container
