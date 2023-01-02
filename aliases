@@ -7,6 +7,20 @@ function warn {
     notify "Finished: $*" || true
 }
 
+function cmk {
+    local threads
+    threads=$(nproc)
+    if [ $# -gt 0 ]; then
+        local target="--target $1"
+        shift 1
+    fi
+    echo "*** STARTING BUILD ***"
+    nice ionice -n7 cmake --build . -j "${threads}" "${target}" "$@"
+    local error=$?
+    notify "Build finished: $*" || true
+    return $error
+}
+
 function mk {
     local threads
     threads=$(nproc)
@@ -22,13 +36,13 @@ function s {
     nice ionice -n7 rg "${SKIP[@]/#/-g!*}" "$@"
 }
 
-function subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
-}
+function ,subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+}  # use tree instead
 
-function replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
+function ,replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
 }  # use fastmod instead
 
-function timediff {
+function ,timediff {
   START=$(date +%s%6N);
   ./"$1";
   END=$(date +%s%6N);
@@ -37,65 +51,81 @@ function timediff {
   echo "Total time (in ns): $(($END - $START))"
 }
 
-function purge { hg purge --all "$@" && echo "*** PURGE FINISHED ***" ;}
+function ,hgpurge { hg purge --all "$@" && echo "*** PURGE FINISHED ***" ;}
 
-function mv_all_to_subfolder {
+function ,mv_to_subfolder {
     find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
 }
 
-function mkcdir {
-    mkdir -p "$1" && cd "$1"
-}
-
-function docker_cleanup {
+function ,docker_cleanup {
     #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
     #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
     docker rm -v "$(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null)" 2>/dev/null
     docker rmi "$(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null)" 2>/dev/null
 }
 
-function size {
-    du -h --max-depth=1 $@ | sort -hr
+function ,size {
+    if command -v dust > /dev/null; then
+        dust
+    else
+        du -h --max-depth=1 "$@" | sort -hr
+    fi
+}
+
+function define_ls_aliases {
+    if command -v exa > /dev/null; then
+        alias ls='exa'
+        alias ll='exa -lbh --icons --color=auto --group-directories-first'
+        alias tree='exa --tree'
+    else
+        alias ll='ls -halt --color=auto'
+    fi
+
+    alias l.='ls -d .*'
+    alias l='ls -l'
+    alias la='ls -hal'
+}
+
+function ,cp {
+    if command -v xcp > /dev/null; then
+        alias cp=xcp
+    elif command -v rsync > /dev/null; then
+        alias cp="rsync -ah --progress"
+        alias cp_net="rsync -avz"
+    fi
+}
+
+function ,ps {
+    if command -v procs > /dev/null; then
+        procs
+    fi
+}
+
+function ,cat {
+    if command -v bat > /dev/null; then
+        bat --style=changes
+    fi
 }
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-alias cd1='cd ..'
-alias cd2='cd ../..'
-alias cd3='cd ../../..'
-alias cd4='cd ../../../..'
-alias cd5='cd ../../../../..'
+alias ,dog='pygmentize -g'
+alias ,findregex="find -regextype posix-extended -regex"
+alias ,hgroot='cd $(hg root)'
+alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
+alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
 
-alias cp_net="rsync -avz"
-alias cp="rsync -ah --progress"
-alias dog='pygmentize -g'
-alias findregex="find -regextype posix-extended -regex"
-alias g=git
-alias gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
-alias groot='cd $(git rev-parse --show-toplevel)'
-alias hgroot='cd $(hg root)'
-alias l.='ls -d .*'
-alias l='ls -l'
-alias la="ls -alh"
-alias lgrep="l | grep"
-alias ll='ls -halt'
-alias llgrep="ll | grep"
 alias o='code -r'
-alias pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
 alias so='fview -r '
-alias vi=vim
-
-which exa > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  alias ll='exa -lbh --icons --color=auto --group-directories-first'
-else
-  alias ll='ls -alh --color=auto'
-fi
+alias vi='vim'
+alias g='git'
+alias groot='cd $(git rev-parse --show-toplevel)'
 
 # enable completion for aliases example:
 # alias container=docker\ container
 # complete -F _complete_alias container
 [[ $0 == "/bin/bash" ]] && complete -F _complete_alias g  # git
 
+define_ls_aliases
