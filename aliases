@@ -3,15 +3,18 @@
 alias notify='xmessage -nearmouse -timeout 5 -buttons ""'
 
 function warn {
-    $@
-    notify "Finished: $@" || true
+    "$@"
+    notify "Finished: $*" || true
 }
 
 function mk {
-    local threads=$(nproc)
+    local threads
+    threads=$(nproc)
     echo "*** STARTING BUILD ***"
-    nice ionice -n7 make -j ${threads} $@
-    notify "Build finished: $@" || true
+    nice ionice -n7 make -j "${threads}" "$@"
+    local error=$?
+    notify "Build finished: $*" || true
+    return $error
 }
 
 function s {
@@ -27,14 +30,14 @@ function replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g
 
 function timediff {
   START=$(date +%s%6N);
-  ./$1;
+  ./"$1";
   END=$(date +%s%6N);
   echo "___________________"
   echo
   echo "Total time (in ns): $(($END - $START))"
 }
 
-function purge { hg purge --all $@ && echo "*** PURGE FINISHED ***" ;}
+function purge { hg purge --all "$@" && echo "*** PURGE FINISHED ***" ;}
 
 function mv_all_to_subfolder {
     find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
@@ -47,8 +50,8 @@ function mkcdir {
 function docker_cleanup {
     #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
     #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
-    docker rm -v $(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
-    docker rmi $(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
+    docker rm -v "$(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null)" 2>/dev/null
+    docker rmi "$(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null)" 2>/dev/null
 }
 
 function size {
@@ -94,4 +97,5 @@ fi
 # enable completion for aliases example:
 # alias container=docker\ container
 # complete -F _complete_alias container
-[[ "$(echo $0)" == "/bin/bash" ]] && complete -F _complete_alias g  # git
+[[ $0 == "/bin/bash" ]] && complete -F _complete_alias g  # git
+

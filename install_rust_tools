@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
+# shellcheck disable=SC2016
 
 source install_helpers.sh
-print_commence $BASH_SOURCE
+print_commence "$BASH_SOURCE"
 
 function __install_rust() {
   is_installed cargo && return
 
   echo -e "\nInstalling rust"
   curl https://sh.rustup.rs -sSf | sh
-  echo 'source "$HOME/.cargo/env"' >> $HOME/.zshenv
-  source $HOME/.zshenv
+  echo 'source "$HOME/.cargo/env"' >> "$HOME/.zshenv"
+  source "$HOME/.zshenv"
 }
 
 __install_rust

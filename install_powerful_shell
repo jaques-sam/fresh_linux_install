@@ -1,38 +1,40 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
+# shellcheck disable=SC2016
 
 source install_helpers.sh
-print_commence $BASH_SOURCE
+print_commence "$BASH_SOURCE"
 
 function __add_zsh_to_profile() {
-  zsh_path=$(which zsh)
+  {
+    echo ''
+    echo "# Added by $USER for zsh"
+    echo 'export SHELL=$(which zsh)'
+    echo '[ -z "$ZSH_VERSION" ] && exec $SHELL -l'
+  } >> "$HOME/.profile"
 
-  echo "" >> $HOME/.profile
-  echo "# Added by $USER for zsh" >> $HOME/.profile
-  echo 'export SHELL=$(which zsh)' >> $HOME/.profile
-  echo '[ -z "$ZSH_VERSION" ] && exec $SHELL -l' >> $HOME/.profile
-
-  source $HOME/.profile
+  source "$HOME/.profile"
 }
 
 function __change_shell() {
   [ "$SHELL" == "$(which zsh)" ] && echo -e "zsh is already the default shell" && return
   echo "User shell is not zsh. Changing..."
-  if ! chsh -s $(which zsh); then
-    echo "Failed with chsh. Setting .profile"
+  if ! chsh -s "$(which zsh)"; then
+    echo "Failed with chsh. Setting zsh to .profile"
     __add_zsh_to_profile
   fi
 }
 
 function __install_antigen() {
-  [[ -f $HOME/antigen.zsh ]] && echo -e "antigen is already installed" && return
+  [[ -f "$HOME/antigen.zsh" ]] && echo -e "antigen is already installed" && return
   echo -e "\nInstalling antigen"
-  curl -L git.io/antigen > $HOME/antigen.zsh
+  curl -L git.io/antigen > "$HOME/antigen.zsh"
 }
 
 
-update_file zshrc $HOME/.zshrc
-update_file zshenv $HOME/.zshenv
-update_file aliases $HOME/.aliases
+update_file zshrc "$HOME/.zshrc"
+update_file zshenv "$HOME/.zshenv"
+update_file aliases "$HOME/.aliases"
 
 install_tool curl
 install_tool zsh
