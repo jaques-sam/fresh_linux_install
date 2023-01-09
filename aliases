@@ -86,24 +86,27 @@ function define_ls_aliases {
     alias la='ls -hal'
 }
 
-function ,cp {
-    if command -v xcp > /dev/null; then
-        alias cp=xcp
-    elif command -v rsync > /dev/null; then
-        alias cp="rsync -ah --progress"
-        alias cp_net="rsync -avz"
+function define_better_buildin_aliases {
+    if command -v fd > /dev/null; then
+        alias ,find=fd
     fi
-}
-
-function ,ps {
-    if command -v procs > /dev/null; then
-        procs
-    fi
-}
-
-function ,cat {
     if command -v bat > /dev/null; then
-        bat --style=changes
+        alias ,cat=bat
+    fi
+    if command -v dust > /dev/null; then
+        alias ,du=dust
+    fi
+    if command -v rip > /dev/null; then
+        alias ,rm=rip
+    fi
+    if command -v procs > /dev/null; then
+        alias ,ps=procs
+    fi
+    if command -v xcp > /dev/null; then
+        alias ,cp=xcp
+    elif command -v rsync > /dev/null; then
+        alias ,cp="rsync -ah --progress"
+        alias ,cp_net="rsync -avz"
     fi
 }
 
@@ -129,3 +132,4 @@ alias groot='cd $(git rev-parse --show-toplevel)'
 [[ $0 == "/bin/bash" ]] && complete -F _complete_alias g  # git
 
 define_ls_aliases
+define_better_buildin_aliases
