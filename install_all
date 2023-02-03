@@ -9,3 +9,4 @@ source install_common_tools
 source install_powerful_shell
 source install_rust_tools
 source install_python_tools
+source install_docker

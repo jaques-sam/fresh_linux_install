@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# shellcheck source=/dev/null
+
+source install_helpers.sh
+print_commence "$BASH_SOURCE"
+
+function __install_gpg_key {
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+}
+
+function __setup_repo {
+    echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+}
+
+install_tool ca-certificates
+install_tool curl
+install_tool gnupg
+install_tool lsb-release
+
+__install_gpg_key
+__setup_repo
+
+install_tool docker-ce
+install_tool docker-ce-cli
+install_tool containerd.io
+install_tool docker-compose-plugin
