@@ -27,6 +27,7 @@ cargo install \
   rm-improved \
   sd \
   starship \
+  tokei \
   topgrade \
   xcp \
   zoxide \

@@ -17,6 +17,7 @@ Via `install_rust_tools.sh`:
   - rm-improved: better rm with bin
   - sd: better sed
   - starship: fast prompt
+  - tokei: code statistics
   - topgrade: upgrade everything
   - xcp: better 'cp'
   - zoxide: better 'cd' which does auto completion for paths
