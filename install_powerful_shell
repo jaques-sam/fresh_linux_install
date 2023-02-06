@@ -34,6 +34,7 @@ function __install_antigen() {
 
 update_file zshrc "$HOME/.zshrc"
 update_file zshenv "$HOME/.zshenv"
+update_file ssh_agent.sh "$HOME/.ssh_agent.sh"
 update_file aliases "$HOME/.aliases"
 
 install_tool curl
