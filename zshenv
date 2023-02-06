@@ -5,4 +5,5 @@ if [[ -n $(uname -r | rg "$WSL") ]] then;
     source "$HOME/.ssh_agent.sh"
 fi
 
+export PATH=/usr/bin:$PATH
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"

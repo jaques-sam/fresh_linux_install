@@ -8,15 +8,12 @@ antigen bundles <<EOBUNDLES
   colorize
   command-not-found
   fasd
-  jira
   gem
   battery
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-autosuggestions
   bartboy011/cd-reminder
-  MikeDacre/cdbk
   rsync
-  svn-fast-info
 EOBUNDLES
 
 antigen apply
