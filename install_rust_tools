@@ -31,7 +31,12 @@ cargo install \
   topgrade \
   xcp \
   zoxide \
+  cargo-audit \
   --locked
+
+rustup component add
+  clippy \
+  rustfmt
 
 command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
 command -v zoxide > /dev/null && echo 'eval "$(zoxide init zsh)"' >> "$HOME/.zshrc"
