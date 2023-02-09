@@ -16,6 +16,8 @@ function __install_rust() {
 
 __install_rust
 
+[[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
+
 cargo install \
   bat \
   du-dust \
@@ -34,7 +36,7 @@ cargo install \
   cargo-audit \
   --locked
 
-rustup component add
+rustup component add \
   clippy \
   rustfmt
 

@@ -28,4 +28,3 @@ __setup_repo
 install_tool docker-ce
 install_tool docker-ce-cli
 install_tool containerd.io
-install_tool docker-compose-plugin

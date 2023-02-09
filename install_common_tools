@@ -13,6 +13,8 @@ install_tool screen
 install_tool jq
 install_tool cmake
 install_tool sshpass
+install_tool libssl-dev
+install_tool pkg-config
 install_tool openssh-client
 install_tool build-essential
 install_tool llvm
