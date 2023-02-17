@@ -18,27 +18,37 @@ __install_rust
 
 [[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
 
-cargo install \
-  bat \
-  du-dust \
-  exa \
-  fastmod \
-  fd-find \
-  ripgrep \
-  procs \
-  rm-improved \
-  sd \
-  starship \
-  tokei \
-  topgrade \
-  xcp \
-  zoxide \
-  cargo-audit \
-  --locked
+function __basic_tools {
+  cargo install \
+    starship \
+    ripgrep \
+    --locked
+
+  command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+}
+
+function install_all_rust_tools {
+  cargo install \
+    bat \
+    du-dust \
+    exa \
+    fastmod \
+    fd-find \
+    procs \
+    rm-improved \
+    sd \
+    tokei \
+    topgrade \
+    xcp \
+    zoxide \
+    cargo-audit \
+    --locked
+ 
+  command -v zoxide > /dev/null && echo 'eval "$(zoxide init zsh)"' >> "$HOME/.zshrc"
+}
 
 rustup component add \
   clippy \
   rustfmt
 
-command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
-command -v zoxide > /dev/null && echo 'eval "$(zoxide init zsh)"' >> "$HOME/.zshrc"
+__basic_tools
