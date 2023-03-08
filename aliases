@@ -120,11 +120,12 @@ alias ,hgroot='cd $(hg root)'
 alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
 alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
 
-alias o='code -r'
-alias so='fview -r '
-alias vi='vim'
 alias g='git'
 alias groot='cd $(git rev-parse --show-toplevel)'
+alias o='code -r'
+alias rg='rg --vimgrep --color=always'
+alias so='fview -r '
+alias vi='vim'
 
 # enable completion for aliases example:
 # alias container=docker\ container
