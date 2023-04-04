@@ -13,13 +13,28 @@ function os_env()
   echo "${machine}"
 }
 
+function distro_installer()
+{
+  local machine
+  machine="$(cat /etc/*-release | grep ID | head -n1 | cut -d '=' -f2)"
+  case "${machine}" in
+    debian | ubuntu*)
+        installer="apt-get";;
+    fedora*)
+        installer="dnf";;
+    *)
+        installer="echo \'no \'"
+  esac
+  echo "sudo ${installer}"
+}
+
 function os_installer()
 {
   local machine
   machine="$(os_env)"
   case "${machine}" in
     Linux*)
-        installer="sudo apt-get";;
+        installer=$(distro_installer);;
     Mac*)
         installer="brew";;
     Cygwin* | MinGw*)
