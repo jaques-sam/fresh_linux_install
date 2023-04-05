@@ -1,7 +1,7 @@
 [core]
-	fsyncobjectfiles = true
+	fsync = objects,derived-metadata,reference
+	fsyncmethod=fsync
 	preloadindex = true
-	fsynconbjectfiles = true
 	#excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
 	excludesfile = ~/.gitignore_global
 	trustctime = false
