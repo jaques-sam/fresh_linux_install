@@ -64,11 +64,17 @@
 	changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 	children = "!f() { git rev-list --all --not $1^@ --children | grep $(git rev-parse $1); }; f" # reachable children of a ref
+	wip = commit -m wip --no-verify
+	forget = rm --cached
+	brclean = ! git branch --merged | grep -Ev \"(^\\*|master|develop|main)\" | xargs git branch -d
+
 
 [color]
 	ui = true
+
 [color "diff"]
 	whitespace = red reverse
+
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
@@ -77,31 +83,43 @@
 
 [merge]
 	tool = vscode
+	conflictstyle = diff3
+
 [mergetool]
 	keepBackup = false
+
 [mergetool "vscode"]
 	cmd = code --wait --new-window $MERGED
 
 [diff]
 	tool = vscode
+	colorMoved = default
+
 [difftool "vscode"]
 	cmd = code --wait --diff --new-window $LOCAL $REMOTE
 
 [branch]
 	autosetuprebase = always
+
 [fetch]
 	prune = true
+
 [push]
 	default = current
+
 [pull]
 	rebase = true
+
 [fetch]
 	prune = false
+
 [rebase]
 	autoStash = false
 	autosquash = true
+
 [winUpdater]
 	recentlySeenVersion = 2.20.1.windows.1
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

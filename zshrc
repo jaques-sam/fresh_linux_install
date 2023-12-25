@@ -25,3 +25,4 @@ setopt HIST_IGNORE_ALL_DUPS
 unsetopt HIST_IGNORE_DUPS
 
 # Initialisation of tools are amended here upon installation...
+eval "$(starship init zsh)"
