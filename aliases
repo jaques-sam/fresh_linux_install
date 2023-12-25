@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 
+alias g='git'
+alias groot='cd $(git rev-parse --show-toplevel)'
 alias notify='xmessage -nearmouse -timeout 5 -buttons ""'
+alias o='code -r'
+alias so='fview -r '
+alias vi='vim'
+
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias ,dog='pygmentize -g'
+alias ,findregex="find -regextype posix-extended -regex"
+alias ,hgroot='cd $(hg root)'
+alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
+alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
+alias ,rg='rg --vimgrep --color=always'
+
+function ,cargo-test-count {
+    cargo test -- --list | awk '/[0-9]+ tests/{sum+=$1}END{print sum}'
+}
 
 function warn {
     "$@"
@@ -32,26 +52,28 @@ function mk {
 }
 
 function s {
-    SKIP=(SST sst unit unittests UT stub IHUB tests)
-    nice ionice -n7 rg "${SKIP[@]/#/-g!*}" "$@"
+    SKIP=(SST sst unit unittests UT stub IHUB tests js svg)
+    nice ionice -n7 rg --vimgrep --color=always "${SKIP[@]/#/-g!*}" "$@"
 }
 
-function ,subdirs { ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
-}  # use tree instead
+function ,subdirs {
+    ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+} # use tree instead
 
-function ,replace { find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
-}  # use fastmod instead
+function ,replace {
+    find ./ -type f -not -path "*/\.*" -exec sed -i -e "s/$1/$2/g" {} \;
+} # use fastmod instead
 
 function ,timediff {
-  START=$(date +%s%6N);
-  ./"$1";
-  END=$(date +%s%6N);
-  echo "___________________"
-  echo
-  echo "Total time (in ns): $(($END - $START))"
+    START=$(date +%s%6N)
+    ./"$1"
+    END=$(date +%s%6N)
+    echo "___________________"
+    echo
+    echo "Total time (in ns): $(($END - $START))"
 }
 
-function ,hgpurge { hg purge --all "$@" && echo "*** PURGE FINISHED ***" ;}
+function ,hgpurge { hg purge --all "$@" && echo "*** PURGE FINISHED ***"; }
 
 function ,mv_to_subfolder {
     find . -mindepth 1 -maxdepth 1 ! -name "$1" -exec mv {} "$1" \;
@@ -65,15 +87,15 @@ function ,docker_cleanup {
 }
 
 function ,size {
-    if command -v dust > /dev/null; then
-        dust
+    if command -v dust >/dev/null; then
+        dust "$@"
     else
         du -h --max-depth=1 "$@" | sort -hr
     fi
 }
 
 function define_ls_aliases {
-    if command -v exa > /dev/null; then
+    if command -v exa >/dev/null; then
         alias ls='exa'
         alias ll='exa -lbh --icons --color=auto --group-directories-first'
         alias tree='exa --tree'
@@ -87,50 +109,33 @@ function define_ls_aliases {
 }
 
 function define_better_buildin_aliases {
-    if command -v fd > /dev/null; then
+    if command -v fd >/dev/null; then
         alias ,find=fd
     fi
-    if command -v bat > /dev/null; then
+    if command -v bat >/dev/null; then
         alias ,cat=bat
     fi
-    if command -v dust > /dev/null; then
+    if command -v dust >/dev/null; then
         alias ,du=dust
     fi
-    if command -v rip > /dev/null; then
+    if command -v rip >/dev/null; then
         alias ,rm=rip
     fi
-    if command -v procs > /dev/null; then
+    if command -v procs >/dev/null; then
         alias ,ps=procs
     fi
-    if command -v xcp > /dev/null; then
+    if command -v xcp >/dev/null; then
         alias ,cp=xcp
-    elif command -v rsync > /dev/null; then
+    elif command -v rsync >/dev/null; then
         alias ,cp="rsync -ah --progress"
         alias ,cp_net="rsync -avz"
     fi
 }
 
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-
-alias ,dog='pygmentize -g'
-alias ,findregex="find -regextype posix-extended -regex"
-alias ,hgroot='cd $(hg root)'
-alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
-alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
-
-alias g='git'
-alias groot='cd $(git rev-parse --show-toplevel)'
-alias o='code -r'
-alias rg='rg --vimgrep --color=always'
-alias so='fview -r '
-alias vi='vim'
-
 # enable completion for aliases example:
 # alias container=docker\ container
 # complete -F _complete_alias container
-[[ $0 == "/bin/bash" ]] && complete -F _complete_alias g  # git
+[[ $0 == "/bin/bash" ]] && complete -F _complete_alias g # git
 
 define_ls_aliases
 define_better_buildin_aliases
