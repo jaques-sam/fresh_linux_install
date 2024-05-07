@@ -19,11 +19,7 @@ __install_rust
 [[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
 
 function __basic_tools {
-  cargo install \
-    starship \
-    ripgrep \
-    --locked
-
+  curl -sS https://starship.rs/install.sh | sh -s -- -y
   command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
 }
 

@@ -21,3 +21,4 @@ install_tool llvm
 install_tool wget
 install_tool meson
 install_tool util-linux-user
+install_tool ripgrep
