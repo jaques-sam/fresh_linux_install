@@ -1,5 +1,8 @@
 source $HOME/antigen.zsh
 
+command -v starship > /dev/null && eval "$(starship init zsh)"
+command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
+
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
@@ -23,6 +26,4 @@ setopt CORRECT
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt HIST_IGNORE_DUPS
-
-# Initialisation of tools are amended here upon installation...
-eval "$(starship init zsh)"
+bindkey -r "^V"

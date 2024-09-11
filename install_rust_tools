@@ -20,7 +20,6 @@ __install_rust
 
 function __basic_tools {
   curl -sS https://starship.rs/install.sh | sh -s -- -y
-  command -v starship > /dev/null && echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
 }
 
 function install_all_rust_tools {
@@ -39,8 +38,6 @@ function install_all_rust_tools {
     zoxide \
     cargo-audit \
     --locked
- 
-  command -v zoxide > /dev/null && echo 'eval "$(zoxide init zsh)"' >> "$HOME/.zshrc"
 }
 
 rustup component add \
