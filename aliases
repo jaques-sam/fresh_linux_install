@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+alias c='cargo'
 alias g='git'
 alias groot='cd $(git rev-parse --show-toplevel)'
-alias notify='xmessage -nearmouse -timeout 5 -buttons ""'
+alias xnotify='xmessage -nearmouse -timeout 5 -buttons ""'
 alias o='code -r'
 alias so='fview -r '
 alias vi='vim'
+alias vpnd='openvpn3 session-manage -D -c /home/sam/profile-2788.ovpn'
+alias vpnu='openvpn3 session-start --config ~/profile-2788.ovpn --timeout 4800'
+alias zed='~/Repos/upstream/zed/target/release/zed'
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -17,6 +21,11 @@ alias ,hgroot='cd $(hg root)'
 alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
 alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
 alias ,rg='rg --vimgrep --color=always'
+alias ,clang-format='docker run --rm --volume $(pwd):/repo --workdir="/repo" -it clang-format-14 -c "git config --global --add safe.directory /repo && git diff --name-only | xargs clang-format -i"'
+
+function ,cargo-login {
+    az account get-access-token --query "join(' ', ['Bearer', accessToken])" --output tsv | cargo login --registry General
+}
 
 function ,cargo-test-count {
     cargo test -- --list | awk '/[0-9]+ tests/{sum+=$1}END{print sum}'
@@ -24,35 +33,22 @@ function ,cargo-test-count {
 
 function warn {
     "$@"
-    notify "Finished: $*" || true
-}
-
-function cmk {
-    local threads
-    threads=$(nproc)
-    if [ $# -gt 0 ]; then
-        local target="--target $1"
-        shift 1
-    fi
-    echo "*** STARTING BUILD ***"
-    nice ionice -n7 cmake --build . -j "${threads}" "${target}" "$@"
-    local error=$?
-    notify "Build finished: $*" || true
-    return $error
+    zenity --info --text="Finished: $*" || true
 }
 
 function mk {
-    local threads
-    threads=$(nproc)
     echo "*** STARTING BUILD ***"
-    nice ionice -n7 make -j "${threads}" "$@"
-    local error=$?
-    notify "Build finished: $*" || true
+    nice ionice -n7 make -j "$(nproc)" "$@" &
+    local make_pid=$!
+    local error=0
+    wait $make_pid
+    error=$?
+    xnotify "Build finished: $*" &
     return $error
 }
 
 function s {
-    SKIP=(SST sst unit unittests UT stub IHUB tests js svg)
+    SKIP=(/target/ /build/ /test/ /unit/ /unittests/ /stub/ /js/ /svg/)
     nice ionice -n7 rg --vimgrep --color=always "${SKIP[@]/#/-g!*}" "$@"
 }
 
@@ -70,7 +66,7 @@ function ,timediff {
     END=$(date +%s%6N)
     echo "___________________"
     echo
-    echo "Total time (in ns): $(($END - $START))"
+    echo "Total time (in ns): $((END - START))"
 }
 
 function ,hgpurge { hg purge --all "$@" && echo "*** PURGE FINISHED ***"; }
@@ -82,8 +78,8 @@ function ,mv_to_subfolder {
 function ,docker_cleanup {
     #sudo docker-latest rm -v $(sudo docker-latest ps -qa --no-trunc --filter "status=exited" 2>/dev/null) 2>/dev/null
     #sudo docker-latest rmi $(sudo docker-latest images --filter "dangling=true" -q --no-trunc 2>/dev/null) 2>/dev/null
-    docker rm -v "$(docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null)" 2>/dev/null
-    docker rmi "$(docker images --filter "dangling=true" -q --no-trunc 2>/dev/null)" 2>/dev/null
+    docker ps -qa --no-trunc --filter "status=exited" 2>/dev/null | xargs docker rm -v
+    docker images --filter "dangling=true" -q --no-trunc 2>/dev/null | xargs docker rmi
 }
 
 function ,size {

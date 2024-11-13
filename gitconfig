@@ -1,127 +1,139 @@
 [core]
-	fsync = objects,derived-metadata,reference
-	fsyncmethod=fsync
-	preloadindex = true
-	#excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
-	excludesfile = ~/.gitignore_global
-	trustctime = false
-	editor = vim
-[user]
-	name =
-	email =
-[alias]
-	dt = difftool
-	cp = cherry-pick
-	st = status
-	cl = clone
-	ci = commit
-	cia = commit --amend
-	co = checkout
-	br = branch
-	diff = diff --word-diff
-	dif = diff
-	dc = diff --cached
-	sl = stash list
-	sa = stash apply
-	ss = stash save
-	sp = stash pop
-	r = reset
-	r1 = reset HEAD^
-	r2 = reset HEAD^^
-	rh = reset --hard
-	rh1 = reset HEAD^ --hard
-	rh2 = reset HEAD^^ --hard
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbs = rebase --skip
-	pull = pull --ff-only
-	softreset = reset --soft HEAD^
-	sr = reset --soft
-	svnr = svn rebase
-	svnd = svn dcommit
-	svnl = svn log --oneline --show-commit
-	lc = "!f() { git ll $1^..$1; }; f"
-	f = !git ls-files | grep -i
-	list = log --oneline --graph
-	ls = log --oneline --decorate --all
-	glog = log --graph --oneline --decorate --all
-	files = log --pretty=format:\"%C(yellow)%h%Cred%d | %Creset%s%Cblue | [%cn]\" --decorate --numstat
-	tip = log -n1
-	last = log -1 HEAD
-	mine = log --author=Jaques
-	import = am --signoff
-	unstash = stash pop
-	exec = "!exec "
-	branches = branch -a
-	histedit = rebase -i --preserve-merges
-	meld = difftool --dir-diff
-	sync = !git fetch origin "$1":"$1"
-	fix = "!f() { git commit --fixup=\"$1\"; }; f"
-	amend = commit --amend --no-edit
-	bd = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:iso) %(refname:short)'
-	funcAtRevInFile = "!f() { git log ${2} -n1 -L :${1}:${3} | sed '/^+/d' | sed 's/^.//g'; }; f"
-	moveBranchToRev = !git branch -f "$1" "$2"
-	changed = !qt -p $(git status -s | sed -ne 's/^ M //p')
-	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-	children = "!f() { git rev-list --all --not $1^@ --children | grep $(git rev-parse $1); }; f" # reachable children of a ref
-	wip = commit -m wip --no-verify
-	forget = rm --cached
-	brclean = ! git branch --merged | grep -Ev \"(^\\*|master|develop|main)\" | xargs git branch -d
+fsync = objects,derived-metadata,reference
+fsyncmethod = fsync
+preloadindex = true
+#excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
+excludesfile = ~/.gitignore_global
+trustctime = false
+editor = vim
+pager = delta
 
+[user]
+name = Sam Jaques
+email = s.jaques@televic.com
+[alias]
+dt = difftool
+cp = cherry-pick
+cpa = cherry-pick --abort
+cpc = cherry-pick --continue
+cps = cherry-pick --skip
+st = status
+cl = clone
+ci = commit
+cia = commit --amend
+co = checkout
+br = branch
+diff = diff --word-diff
+dif = diff
+d = diff
+dc = diff --cached
+sl = stash list
+sa = stash apply
+ss = stash save
+sp = stash pop
+r = reset
+r1 = reset HEAD^
+r2 = reset HEAD^^
+rh = reset --hard
+rh1 = reset HEAD^ --hard
+rh2 = reset HEAD^^ --hard
+rba = rebase --abort
+rbc = rebase --continue
+rbs = rebase --skip
+pull = pull --ff-only
+softreset = reset --soft HEAD^
+sr = reset --soft
+svnr = svn rebase
+svnd = svn dcommit
+svnl = svn log --oneline --show-commit
+file = !git ls-files | grep -i
+f = file
+list = log --oneline --graph
+ls = log --oneline --decorate --all
+glog = log --graph --oneline --decorate --all
+files = log --pretty=format:'%C(yellow)%h%Cred%d | %Creset%s%Cblue | [%cn]' --decorate --numstat
+lsfiles = show --name-only --pretty=""
+tip = log -n1
+last = log -1 HEAD
+mine = log --author=Jaques
+import = am --signoff
+unstash = stash pop
+exec = "!exec "
+branches = branch -a
+histedit = rebase -i --preserve-merges
+meld = difftool --dir-diff
+sync = !git fetch origin "$1":"$1" --prune
+fix = "!f() { git commit --fixup $@; }; f"
+amend = commit --amend --no-edit
+bd = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:iso) %(refname:short)'
+funcAtRevInFile = "!f() { git log ${2} -n1 -L :${1}:${3} | sed '/^+/d' | sed 's/^.//g'; }; f"
+moveBranchToRev = !git branch -f "$1" "$2"
+alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+children = "!f() { git rev-list --all --not $1^@ --children | grep $(git rev-parse $1); }; f" # reachable children of a ref
+wip = commit -m wip --no-verify
+forget = rm --cached
+brclean = ! git branch --merged | grep -Ev '(^\\*|master|develop|main)' | xargs git branch -d
+brcl = brclean
 
 [color]
-	ui = true
+ui = true
 
 [color "diff"]
-	whitespace = red reverse
+whitespace = red reverse
 
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+oldNormal = red bold
+oldHighlight = red bold 52
+newNormal = green bold
+newHighlight = green bold 22
 
 [merge]
-	tool = vscode
-	conflictstyle = diff3
+tool = vscode
+conflictstyle = diff3
 
 [mergetool]
-	keepBackup = false
+keepBackup = false
 
 [mergetool "vscode"]
-	cmd = code --wait --new-window $MERGED
+cmd = code --wait --new-window $MERGED
 
 [diff]
-	tool = vscode
-	colorMoved = default
+tool = vscode
+colorMoved = default
 
 [difftool "vscode"]
-	cmd = code --wait --diff --new-window $LOCAL $REMOTE
+cmd = code --wait --diff --new-window $LOCAL $REMOTE
 
 [branch]
-	autosetuprebase = always
+autosetuprebase = always
 
 [fetch]
-	prune = true
+prune = true
 
 [push]
-	default = current
+default = current
 
 [pull]
-	rebase = true
+rebase = true
 
 [fetch]
-	prune = false
+prune = false
 
 [rebase]
-	autoStash = false
-	autosquash = true
+autoStash = false
+autosquash = true
 
 [winUpdater]
-	recentlySeenVersion = 2.20.1.windows.1
+recentlySeenVersion = 2.20.1.windows.1
 
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+navigate = true # use n and N to move between diff sections
