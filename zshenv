@@ -5,6 +5,7 @@ if [[ -n $(uname -r | grep "$WSL") ]] then
     source "$HOME/.ssh_agent.sh"
 fi
 
-export PATH=/usr/bin:$PATH
+export PATH="$PATH:/usr/bin"
+[[ -d "$HOME/.modular/bin" ]] && export PATH="$PATH:$HOME/.modular/bin"
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
