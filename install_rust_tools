@@ -10,38 +10,45 @@ function __install_rust() {
 
   echo -e "\nInstalling rust"
   curl https://sh.rustup.rs -sSf | sh
-  echo 'source "$HOME/.cargo/env"' >> "$HOME/.zshenv"
-  source "$HOME/.zshenv"
+
+  update_file cargo_config.toml "$HOME/.cargo/config.toml"
+
+  [[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
 }
+
+function __install_binstall() {
+  curl -L --proto '=https' --tlsv1.2 -sSf \
+    https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
+    | bash
+}
+
 
 __install_rust
+__install_binstall
 
-[[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
-
-function __basic_tools {
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
-}
-
-function install_all_rust_tools {
-  cargo install \
-    bat \
-    du-dust \
-    exa \
-    fastmod \
-    fd-find \
-    procs \
-    rm-improved \
-    sd \
-    tokei \
-    topgrade \
-    xcp \
-    zoxide \
-    cargo-audit \
-    --locked
-}
+cargo binstall \
+  bat \
+  cargo-audit \
+  cargo-bump \
+  cargo-edit \
+  cargo-machete \
+  cargo-nextest \
+  cargo-semver-checks \
+  du-dust \
+  exa \
+  fastmod \
+  fd-find \
+  grcov \
+  procs \
+  rm-improved \
+  sd \
+  tokei \
+  topgrade \
+  xcp \
+  zoxide \
+  --locked -y
 
 rustup component add \
   clippy \
+  llvm-tools-preview \
   rustfmt
-
-__basic_tools
