@@ -19,4 +19,7 @@ function __install_python3()
 
 __install_python3
 
-pip3 install conan
+pip3 install \
+  black \
+  pylint \
+  pytest
