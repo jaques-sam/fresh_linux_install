@@ -4,6 +4,7 @@ fsyncmethod = fsync
 preloadindex = true
 #excludesfile = C:\\Users\\samja\\Documents\\gitignore_global.txt
 excludesfile = ~/.gitignore_global
+attributesfile = ~/.gitattributes
 trustctime = false
 editor = vim
 pager = delta
@@ -74,6 +75,7 @@ wip = commit -m wip --no-verify
 forget = rm --cached
 brclean = ! git branch --merged | grep -Ev '(^\\*|master|develop|main)' | xargs git branch -d
 brcl = brclean
+swap = ! git stash push -S && git add . && git stash pop
 
 [color]
 ui = true
@@ -100,6 +102,9 @@ cmd = code --wait --new-window $MERGED
 [diff]
 tool = vscode
 colorMoved = default
+
+[diff "hidden"]
+command = /bin/true
 
 [difftool "vscode"]
 cmd = code --wait --diff --new-window $LOCAL $REMOTE

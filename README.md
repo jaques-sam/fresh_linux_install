@@ -2,6 +2,9 @@
 
 ## Actions
 
+Update the dot files in ./dot_files from your existing dot files in ~/HOME:
+`update_dot_files_here.sh`
+
 Installation of the following tools:
 
 Via `install_rust_tools.sh`:
