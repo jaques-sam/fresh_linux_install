@@ -77,7 +77,7 @@ function update_file()
   local difference
 
   if [[ ! -f ${dest_filename} ]]; then
-    cp "${src_basename}" "${dest_filename}"
+    cp "dot_files/${src_basename}" "${dest_filename}"
     return
   fi
 

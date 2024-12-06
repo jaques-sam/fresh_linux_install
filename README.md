@@ -47,6 +47,11 @@ Common files:
 
   - `~/.aliases`
   - `~/.gitconfig`: change your name & email!
+  - `~/.gitattributes`
+  - `~/.bashrc`
+  - `~/.zshrc`
+  - `~/.zshenv`
+  - `~/.ssh_agent.sh`: can be used for SSL
 
 ## Installation
 

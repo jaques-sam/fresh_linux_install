@@ -1,0 +1,7 @@
+command -v starship > /dev/null && eval "$(starship init bash)"
+command -v zoxide > /dev/null && eval "$(zoxide init bash)"
+
+export PATH="$PATH:/usr/bin"
+[[ -d "$HOME/.modular/bin" ]] && export PATH="$PATH:$HOME/.modular/bin"
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"

@@ -32,6 +32,7 @@ function __install_antigen() {
 }
 
 
+update_file bashrc "$HOME/.bashrc"
 update_file zshrc "$HOME/.zshrc"
 update_file zshenv "$HOME/.zshenv"
 update_file ssh_agent.sh "$HOME/.ssh_agent.sh"
