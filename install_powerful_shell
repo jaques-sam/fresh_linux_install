@@ -37,6 +37,7 @@ update_file zshrc "$HOME/.zshrc"
 update_file zshenv "$HOME/.zshenv"
 update_file ssh_agent.sh "$HOME/.ssh_agent.sh"
 update_file aliases "$HOME/.aliases"
+update_file gitattributes "$HOME/.gitattributes"
 
 install_tool curl
 install_tool zsh
