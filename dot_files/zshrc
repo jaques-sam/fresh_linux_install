@@ -13,10 +13,11 @@ antigen bundles <<EOBUNDLES
   fasd
   gem
   battery
+  rsync
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-autosuggestions
+  jirutka/zsh-shift-select
   bartboy011/cd-reminder
-  rsync
 EOBUNDLES
 
 antigen apply
