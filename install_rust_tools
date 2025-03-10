@@ -18,10 +18,9 @@ function __install_rust() {
 
 function __install_binstall() {
   curl -L --proto '=https' --tlsv1.2 -sSf \
-    https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
-    | bash
+    https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh |
+    bash
 }
-
 
 __install_rust
 __install_binstall
@@ -47,6 +46,8 @@ cargo binstall \
   xcp \
   zoxide \
   --locked -y
+
+curl -L "https://github.com/cordx56/rustowl/releases/download/v0.1.3/install.sh" | sh
 
 rustup component add \
   clippy \
