@@ -73,21 +73,22 @@ function install_tool()
 function update_file()
 {
   local src_basename="$1"  # only name of the file
+  local src_filename="dot_files/$1"  # only name of the file
   local dest_filename="$2"  # filename (relative or absolute path)
   local difference
 
   if [[ ! -f ${dest_filename} ]]; then
-    cp "dot_files/${src_basename}" "${dest_filename}"
+    cp "${src_basename}" "${dest_filename}"
     return
   fi
 
-  difference=$(diff "${dest_filename}" "${src_basename}" -u)
+  difference=$(diff "${dest_filename}" "${src_filename}" -u)
   if [[ -n "${difference}" ]]; then
     echo -e "${src_basename} file already exists, difference is:"
     echo -e "${difference}"
     echo -e "Find old file as /tmp/${src_basename}_old"
     mv "${dest_filename}" "/tmp/${src_basename}_old"
-    cp "${src_basename}" "${dest_filename}"
+    cp "${src_filename}" "${dest_filename}"
   fi
 }
 
