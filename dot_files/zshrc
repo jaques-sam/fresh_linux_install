@@ -1,7 +1,8 @@
 source $HOME/antigen.zsh
 
-command -v starship > /dev/null && eval "$(starship init zsh)"
-command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
+command -v starship >/dev/null && eval "$(starship init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v fuck >/dev/null && eval $(thefuck --alias)
 
 antigen use oh-my-zsh
 
@@ -14,8 +15,8 @@ antigen bundles <<EOBUNDLES
   gem
   battery
   rsync
-  zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting
   jirutka/zsh-shift-select
   bartboy011/cd-reminder
 EOBUNDLES
@@ -27,4 +28,6 @@ setopt CORRECT
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt HIST_IGNORE_DUPS
-bindkey -r "^V"
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

@@ -9,3 +9,8 @@ fi
 [[ -d "$HOME/.modular/bin" ]] && export PATH="$PATH:$HOME/.modular/bin"
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -d "$HOME/bin" ]] && export PATH="$PATH:$HOME/bin"
+
+bindkey '^[[1;5C' emacs-forward-word
+bindkey '^[[1;5D' emacs-backward-word
+bindkey -r "^V"

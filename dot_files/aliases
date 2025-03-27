@@ -9,7 +9,6 @@ alias so='fview -r '
 alias vi='vim'
 alias vpnd='openvpn3 session-manage -D -c /home/sam/profile-2788.ovpn'
 alias vpnu='openvpn3 session-start --config ~/profile-2788.ovpn --timeout 4800'
-alias zed='~/Repos/upstream/zed/target/release/zed'
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -38,11 +37,10 @@ function warn {
 
 function mk {
     echo "*** STARTING BUILD ***"
-    nice ionice -n7 make -j "$(nproc)" "$@" &
-    local make_pid=$!
-    local error=0
-    wait $make_pid
-    error=$?
+    trap 'kill $(jobs -p)' SIGINT
+    trap - SIGINT
+    nice ionice -c2 -n7 make -j "$(($(nproc)-3))" "$@"
+    local error=$?
     xnotify "Build finished: $*" &
     return $error
 }
