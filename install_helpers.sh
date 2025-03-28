@@ -1,67 +1,69 @@
 #!/usr/bin/env bash
 
-function os_env()
-{
+function os_env() {
   unameOut="$(uname -s)"
   case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
+  Linux*) machine=Linux ;;
+  Darwin*) machine=Mac ;;
+  CYGWIN*) machine=Cygwin ;;
+  MINGW*) machine=MinGw ;;
+  *) machine="UNKNOWN:${unameOut}" ;;
   esac
   echo "${machine}"
 }
 
-function distro_installer()
-{
+function distro_installer() {
   local machine
   machine="$(cat /etc/*-release | grep ID | head -n1 | cut -d '=' -f2)"
   case "${machine}" in
-    debian | ubuntu*)
-        installer="apt-get";;
-    fedora*)
-        installer="dnf";;
-    *)
-        installer="echo \'no \'"
+  debian | ubuntu*)
+    installer="apt-get"
+    ;;
+  fedora*)
+    installer="dnf"
+    ;;
+  *)
+    installer="echo \'no \'"
+    ;;
   esac
   echo "sudo ${installer}"
 }
 
-function os_installer()
-{
+function os_installer() {
   local machine
   machine="$(os_env)"
   case "${machine}" in
-    Linux*)
-        installer=$(distro_installer);;
-    Mac*)
-        installer="brew";;
-    Cygwin* | MinGw*)
-        installer="choco";;
-    *)
-        installer="echo \'no \'"
+  Linux*)
+    installer=$(distro_installer)
+    ;;
+  Mac*)
+    installer="brew"
+    ;;
+  Cygwin* | MinGw*)
+    installer="choco"
+    ;;
+  *)
+    installer="echo \'no \'"
+    ;;
   esac
   echo "${installer}"
 }
 
-function print_commence()
-{
+function print_commence() {
   local line
   local script_name="$1"
 
-  line=$(printf "\n      %-30s%-s\n"  "${script_name:0:30}" " ")  # last string is used to fill
+  line=$(printf "\n      %-30s%-s\n" "${script_name:0:30}" " ") # last string is used to fill
   echo -e "${line// /_}"
 }
 
 function is_installed() {
   local tool_name="$1"
 
-  command -v "${tool_name}" > /dev/null && echo -e "${tool_name} is already installed"
+  command -v "${tool_name}" >/dev/null && echo -e "${tool_name} is already installed"
 }
 
-function install_tool()
-{
+function install_tool() {
   local tool_name="$1"
 
   is_installed "${tool_name}" && return
@@ -70,11 +72,10 @@ function install_tool()
   $(os_installer) install "${tool_name}" -y
 }
 
-function update_file()
-{
-  local src_basename="$1"  # only name of the file
-  local src_filename="dot_files/$1"  # only name of the file
-  local dest_filename="$2"  # filename (relative or absolute path)
+function update_file() {
+  local src_basename="$1"           # only name of the file
+  local src_filename="dot_files/$1" # only name of the file
+  local dest_filename="$2"          # filename (relative or absolute path)
   local difference
 
   if [[ ! -f ${dest_filename} ]]; then
@@ -92,8 +93,7 @@ function update_file()
   fi
 }
 
-function git_repo_update()
-{
+function git_repo_update() {
   local git_repo_dir="$1"
 
   git -C "${git_repo_dir}" checkout master -f

@@ -4,8 +4,7 @@
 source install_helpers.sh
 print_commence $BASH_SOURCE
 
-function __install_python3()
-{
+function __install_python3() {
   is_installed python3 && return
 
   install_tool python3
@@ -13,9 +12,8 @@ function __install_python3()
 
   local python_exes
   python_exes=$(python3 -m site --user-base)
-  echo "[[ -d ${python_exes} ]] && export PATH=\"${python_exes}/bin:\$PATH\"" >> "$HOME/.zshenv"
+  echo "[[ -d ${python_exes} ]] && export PATH=\"${python_exes}/bin:\$PATH\"" >>"$HOME/.zshenv"
 }
-
 
 __install_python3
 
