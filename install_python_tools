@@ -8,7 +8,6 @@ function __install_python3() {
   is_installed python3 && return
 
   install_tool python3
-  install_tool python3-pip
 
   local python_exes
   python_exes=$(python3 -m site --user-base)
@@ -17,7 +16,7 @@ function __install_python3() {
 
 __install_python3
 
-pip3 install \
+uv pip install \
   black \
   pylint \
   pytest

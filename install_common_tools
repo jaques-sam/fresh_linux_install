@@ -7,19 +7,17 @@ print_commence "$BASH_SOURCE"
 install_tool git
 update_dot_file gitconfig "$HOME/.gitconfig"
 
-install_tool rsync
-install_tool vim
-install_tool screen
-install_tool jq
 install_tool cmake
-install_tool sshpass
-install_tool libssl-dev
-install_tool pkg-config
-install_tool openssh-client
-install_tool build-essential
-install_tool llvm
-install_tool wget
-install_tool meson
-install_tool util-linux-user
-install_tool ripgrep
 install_tool code
+install_tool fzf
+install_tool jq
+install_tool llvm
+install_tool openssh-client
+install_tool pkg-config
+install_tool ripgrep
+install_tool rsync
+install_tool screen
+install_tool sshpass
+install_tool util-linux-user
+install_tool vim
+install_tool wget
