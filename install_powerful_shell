@@ -26,9 +26,9 @@ function __change_shell() {
   fi
 }
 
-function __install_oh-my-zsh() {
+function __install_oh_my_zsh() {
   [[ -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]] && echo -e "oh-my-zsh is already installed" && return
-  echo -e "\nInstalling antigen"
+  echo -e "\nInstalling oh-my-zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
@@ -47,16 +47,18 @@ function __install_fish_config() {
   fi
 }
 
-update_file bashrc "$HOME/.bashrc"
-update_file zshrc "$HOME/.zshrc"
-update_file zshenv "$HOME/.zshenv"
-update_file ssh_agent.sh "$HOME/.ssh_agent.sh"
-update_file aliases "$HOME/.aliases"
-update_file gitattributes "$HOME/.gitattributes"
+update_dot_file bashrc "$HOME/.bashrc"
+update_dot_file zshrc "$HOME/.zshrc"
+update_dot_file zshenv "$HOME/.zshenv"
+update_dot_file ssh_agent.sh "$HOME/.ssh_agent.sh"
+update_dot_file aliases "$HOME/.aliases"
+update_dot_file gitattributes "$HOME/.gitattributes"
+
 
 install_tool curl
 install_tool fish
 
+__install_oh_my_zsh
 __install_antigen
 __change_shell
 __install_fish_config

@@ -7,11 +7,10 @@ excludesfile = ~/.gitignore_global
 attributesfile = ~/.gitattributes
 trustctime = false
 editor = vim
-pager = delta
 
 [user]
-name = Sam Jaques
-email = s.jaques@televic.com
+name =
+email =
 
 [alias]
 dt = difftool
@@ -44,6 +43,7 @@ rba = rebase --abort
 rbc = rebase --continue
 rbs = rebase --skip
 pull = pull --ff-only
+pf = push --force
 softreset = reset --soft HEAD^
 sr = reset --soft
 svnr = svn rebase
@@ -138,12 +138,6 @@ clean = git-lfs clean -- %f
 smudge = git-lfs smudge -- %f
 process = git-lfs filter-process
 
-[interactive]
-diffFilter = delta --color-only
-
-[delta]
-navigate = true # use n and N to move between diff sections
-
 [filter "crypt"]
 clean = openssl enc ...
 smudge = openssl enc -d ...
@@ -151,3 +145,5 @@ required
 
 [rerere]
 enabled = true
+[init]
+	defaultBranch = main

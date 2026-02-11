@@ -67,19 +67,20 @@ function install_tool() {
   local tool_name="$1"
 
   is_installed "${tool_name}" && return
+  echo -e "-------------------------"
   echo -e "\nInstalling ${tool_name}"
 
   $(os_installer) install "${tool_name}" -y
 }
 
-function update_file() {
+function update_dot_file() {
   local src_basename="$1"           # only name of the file
   local src_filename="dot_files/$1" # only name of the file
   local dest_filename="$2"          # filename (relative or absolute path)
   local difference
 
   if [[ ! -f ${dest_filename} ]]; then
-    cp "${src_basename}" "${dest_filename}"
+    cp "${src_filename}" "${dest_filename}"
     return
   fi
 

@@ -5,7 +5,7 @@ source install_helpers.sh
 print_commence "$BASH_SOURCE"
 
 install_tool git
-update_file gitconfig "$HOME/.gitconfig"
+update_dot_file gitconfig "$HOME/.gitconfig"
 
 install_tool rsync
 install_tool vim
