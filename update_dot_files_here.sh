@@ -11,4 +11,10 @@ for file in dot_files/*; do
     cp "${potential_file}" "${file}"
 done
 
+for file in "${HOME}"/.config/fish/*; do
+    potential_file=${HOME}/.config/fish/$(basename "${file}")
+    cp -r "${potential_file}" "fish_config/$(basename "${file}")"
+done
+
 git add dot_files
+git add fish_config

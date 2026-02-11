@@ -5,3 +5,8 @@ export PATH="$PATH:/usr/bin"
 [[ -d "$HOME/.modular/bin" ]] && export PATH="$PATH:$HOME/.modular/bin"
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# alias container=docker\ container
+# complete -F _complete_alias container
+[[ $0 == "/bin/bash" ]] && complete -F _complete_alias g # git
+. "$HOME/.cargo/env"

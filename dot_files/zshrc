@@ -28,6 +28,11 @@ setopt CORRECT
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt HIST_IGNORE_DUPS
+bindkey -r "^V"
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+command -v sk > /dev/null && source <(sk --shell zsh)
+[[ -d "$HOME/.skim" ]] && for file in $HOME/.skim/*.zsh; do source "$file"; done
+
+# alias container=docker\ container
+# complete -F _complete_alias container
+[[ $0 == "/bin/bash" ]] && complete -F _complete_alias g # git
