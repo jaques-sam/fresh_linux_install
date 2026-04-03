@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 
 alias c='cargo'
-alias cat=bat
-alias cd=z
+alias cat='bat --style=plain'
 alias cp=xcp
 alias d='dirs'
 alias g='git'
@@ -10,18 +9,19 @@ alias groot='cd $(git rev-parse --show-toplevel)'
 alias ls=exa
 alias o='code -r'
 alias ps=procs
-alias rm=rip
 alias so='fview -r '
 alias tree='exa --tree'
 alias trnl='trans -t nl' 
 alias vi='vim'
 alias xnotify='xmessage -nearmouse -timeout 5 -buttons ""'
+alias podr='podman run --rm --volume="$(pwd):/ws:U,Z" -w /ws -it'
 
-alias ...='../..'
-alias ....='../../..'
-alias .....='../../../..'
-alias ......='../../../../..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
+alias ,cat=bat
 alias ,clang-format='docker run --rm --volume $(pwd):/repo --workdir="/repo" -it clang-format-14 -c "git config --global --add safe.directory /repo && git diff --name-only | xargs clang-format -i"'
 alias ,cp="rsync -ah --progress"
 alias ,dog='pygmentize -g'
@@ -32,6 +32,7 @@ alias ,gpull='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull
 alias ,hgroot='cd $(hg root)'
 alias ,ping=gping
 alias ,pyenv='cd ~/repo/python; . python-virtual-env/bin/activate'
+alias ,rm='rip'
 alias ,rg='rg --color=always --line-number --vimgrep'
 alias ,scp="rsync -avz"
 alias ,top=btm

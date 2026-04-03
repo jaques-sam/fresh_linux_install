@@ -9,8 +9,8 @@ trustctime = false
 editor = vim
 
 [user]
-name =
-email =
+name = 
+email = 
 
 [alias]
 dt = difftool
@@ -57,7 +57,7 @@ files = log --pretty=format:'%C(yellow)%h%Cred%d | %Creset%s%Cblue | [%cn]' --de
 lsfiles = show --name-only --pretty=""
 tip = log -n1
 last = log -1 HEAD
-mine = log --author=Jaques
+mine = log --author=Jaques --oneline --graph
 import = am --signoff
 unstash = stash pop
 unst = unstash
@@ -102,6 +102,10 @@ keepBackup = false
 [mergetool "vscode"]
 cmd = code --wait --new-window $MERGED
 
+[merge "mergiraf"]
+name = mergiraf
+driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
 [diff]
 tool = vscode
 colorMoved = default
@@ -145,5 +149,8 @@ required
 
 [rerere]
 enabled = true
+
 [init]
-	defaultBranch = main
+defaultBranch = main
+
+
