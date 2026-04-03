@@ -8,6 +8,7 @@ Update the dot files in ./dot_files from your existing dot files in ~/HOME:
 Installation of the following tools:
 
 Via `install_rust_tools.sh`:
+At least:
 
   - full rust package
   - bat: better cat
@@ -26,6 +27,7 @@ Via `install_rust_tools.sh`:
   - zoxide: better 'cd' which does auto completion for paths
 
 Via `install_common_tools.sh`
+At least:
 
   - cmake
   - curl
@@ -41,20 +43,23 @@ Via `install_common_tools.sh`
 
 Via `install_powerful_shell.sh`:
 
-  - zsh: our new default shell
-  - antigen: zsh package manager
+  - ~~zsh: our old default shell~~
+  - fish: our new default shell
   - ~~powerlevel10k fast powerful shell prompt, this will start config wizard~~
   - starship: more powerful shell prompt written in rust
 
-Common files:
+Common dot files under `./dot_files`:
 
   - `~/.aliases`
-  - `~/.gitconfig`: change your name & email!
+  - `~/.gitconfig`: **change your name & email!**
   - `~/.gitattributes`
   - `~/.bashrc`
   - `~/.zshrc`
   - `~/.zshenv`
   - `~/.ssh_agent.sh`: can be used for SSL
+
+Full directories
+  - `~/.config/fish...`: fish config and aliases, under `./fish_config`
 
 ## Installation
 
