@@ -42,6 +42,7 @@ cargo binstall \
   grcov \
   gping \
   hyperfine \
+  mergiraf \
   procs \
   rm-improved \
   rustowl \
